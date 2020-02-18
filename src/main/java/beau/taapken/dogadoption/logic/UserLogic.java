@@ -16,11 +16,17 @@ public class UserLogic implements IUser {
     public UserLogic(UserRepository userRepository) { this.userRepository = userRepository; }
 
     public Response addUser(User user) {
-        Response response = new Response(ResponseCode.PlaceHolder, "");
+        Response response = new Response(ResponseCode.Error, "Everything is broken here.");
         try{
-            userRepository.save(user);
-            response.setResponseCode(ResponseCode.Done);
-            response.setResponseDescription("Everything went correctly");
+            if(userRepository.existsById(user.getUUID())){
+                response.setResponseCode(ResponseCode.Existing);
+                response.setResponseDescription("User already exists");
+            }
+            else{
+                userRepository.save(user);
+                response.setResponseCode(ResponseCode.Done);
+                response.setResponseDescription("Everything went correctly");
+            }
         }
         catch(Exception ex){
             response.setResponseCode(ResponseCode.Error);
@@ -31,6 +37,7 @@ public class UserLogic implements IUser {
 
     public String getUsername(String UUID) {
         try{
+            System.out.println(UUID);
             return userRepository.getOne(UUID).getUsername();
         }
         catch(Exception ex){

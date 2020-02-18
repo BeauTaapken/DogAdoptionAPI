@@ -29,7 +29,6 @@ public class UserController implements IUser {
 
     @GetMapping("/getuser/{UUID}")
     public String getUsername(@PathVariable String UUID) {
-        System.out.println(UUID);
         try{
             return userLogic.getUsername(UUID);
         }
