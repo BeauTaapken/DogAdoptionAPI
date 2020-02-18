@@ -5,4 +5,5 @@ import beau.taapken.dogadoption.model.User;
 
 public interface IUser {
     Response addUser(User user);
+    String getUsername(String UUID);
 }

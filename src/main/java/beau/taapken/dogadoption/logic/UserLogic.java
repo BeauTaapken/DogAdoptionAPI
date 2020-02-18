@@ -19,11 +19,23 @@ public class UserLogic implements IUser {
         Response response = new Response(ResponseCode.PlaceHolder, "");
         try{
             userRepository.save(user);
+            response.setResponseCode(ResponseCode.Done);
+            response.setResponseDescription("Everything went correctly");
         }
         catch(Exception ex){
             response.setResponseCode(ResponseCode.Error);
             response.setResponseDescription(ex.toString());
         }
         return response;
+    }
+
+    public String getUsername(String UUID) {
+        try{
+            return userRepository.getOne(UUID).getUsername();
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return null;
     }
 }

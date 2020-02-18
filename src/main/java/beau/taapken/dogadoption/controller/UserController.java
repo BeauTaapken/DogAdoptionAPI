@@ -8,19 +8,33 @@ import beau.taapken.dogadoption.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
+@CrossOrigin
 @RequestMapping("/user")
 @RestController
 public class UserController implements IUser {
     @Autowired
     private UserLogic userLogic;
 
-    @PostMapping(path = "/adduser")
+    @PostMapping("/adduser")
     public Response addUser(@RequestBody User user) {
         try{
             return userLogic.addUser(user);
         }
         catch (Exception ex){
             return new Response(ResponseCode.Error, ex.toString());
+        }
+    }
+
+    @GetMapping("/getuser/{UUID}")
+    public String getUsername(@PathVariable String UUID) {
+        System.out.println(UUID);
+        try{
+            return userLogic.getUsername(UUID);
+        }
+        catch(Exception ex){
+            return null;
         }
     }
 }
