@@ -1,6 +1,10 @@
 package beau.taapken.dogadoption;
 
+import beau.taapken.dogadoption.enumerator.DogBreed;
+import beau.taapken.dogadoption.logic.AdvertLogic;
+import beau.taapken.dogadoption.logic.EnumLogic;
 import beau.taapken.dogadoption.logic.UserLogic;
+import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import org.junit.Assert;
@@ -16,11 +20,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 @TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
 public class UnitApplicationTests {
-    private final User user = new User("UUID", "Username");
+    // <editor-fold defaultstate="collapsed" desc="Setup">
+    private final User user = new User("UUID", "Username", null);
+    private final Advert advert = new Advert(1, user, "title", "description", DogBreed.BEAGLE, 2);
 
     @Autowired
     private UserLogic userLogic;
 
+    @Autowired
+    private AdvertLogic advertLogic;
+
+    @Autowired
+    private EnumLogic enumLogic;
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="UserLogic tests">
     @Test
     @DirtiesContext
     public void addUserCorrectly(){
@@ -29,7 +43,6 @@ public class UnitApplicationTests {
         String expected = "Done: Everything went correctly";
 
         Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
-
     }
 
     @Test
@@ -73,4 +86,30 @@ public class UnitApplicationTests {
 
         Assert.assertEquals(expected, result);
     }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="AdvertLogic tests">
+    //TODO don't know how to test this right now because of OneToMany
+//    @Test
+//    @DirtiesContext
+//    public void addAdvertCorrectly(){
+//        Response result = advertLogic.addAdvert(advert);
+//
+//        String expected = "{\"breeds\":[\"BULLDOG\",\"GERMAN_SHEPPARD\",\"LABRADOR\",\"GOLDEN_RETRIEVER\",\"BEAGLE\",\"OTHER\"]}";
+//
+//        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+//    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="EnumLogic tests">
+    @Test
+    @DirtiesContext
+    public void getDogBreeds(){
+        String result = enumLogic.getDogBreeds();
+
+        String expected = "{\"breeds\":[\"BULLDOG\",\"GERMAN_SHEPPARD\",\"LABRADOR\",\"GOLDEN_RETRIEVER\",\"BEAGLE\",\"OTHER\"]}";
+
+        Assert.assertEquals(expected, result);
+    }
+    // </editor-fold>
 }

@@ -1,5 +1,6 @@
 package beau.taapken.dogadoption.model;
 
+import beau.taapken.dogadoption.enumerator.DogBreed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,15 +20,15 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class Advert  {
     @Id
-    @NotNull
-    @JsonProperty("UUID")
+    @JsonProperty("advertId")
+    @GeneratedValue
     @Column(unique = true)
-    private String UUID;
+    private int advertId;
 
     @NotNull
-    @JsonProperty("advertId")
-    @Column(unique = true)
-    private String advertId;
+    @JsonProperty("UUID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User UUID;
 
     @NotNull
     @JsonProperty("title")
@@ -38,6 +39,10 @@ public class Advert  {
     private String description;
 
     @NotNull
-    @JsonProperty("race")
-    private String race;
+    @JsonProperty("breed")
+    private DogBreed breed;
+
+    @NotNull
+    @JsonProperty("age")
+    private int age;
 }

@@ -1,6 +1,8 @@
 package beau.taapken.dogadoption;
 
+import beau.taapken.dogadoption.enumerator.DogBreed;
 import beau.taapken.dogadoption.logic.UserLogic;
+import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.User;
 import com.google.gson.Gson;
 import org.junit.Assert;
@@ -25,7 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
 public class IntegrationApplicationTests {
-    private final User user = new User("UUID", "Username");
+    // <editor-fold defaultstate="collapsed" desc="Setup">
+    private final User user = new User("VtJbQmK1hogZLcAqXkhrnv6vs4n1", "Username", null);
+    private final Advert advert = new Advert(1, user, "title", "description", DogBreed.BEAGLE, 2);
 
     private final Gson gson = new Gson();
 
@@ -38,7 +42,9 @@ public class IntegrationApplicationTests {
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="UserController">
     @Test
     @DirtiesContext
     public void addUserCorrectly() throws Exception {
@@ -122,4 +128,38 @@ public class IntegrationApplicationTests {
 
         Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
     }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="AdvertController">
+    //TODO don't know how to test this right now because of OneToMany
+//    @Test
+//    @DirtiesContext
+//    public void addAdvertCorrectly() throws Exception {
+//        System.out.println(gson.toJson(advert));
+//        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/advert/addadvert")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(gson.toJson(advert))
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(200)).andReturn();
+//
+//        String expectedResult = "{\"responseCode\":\"Done\",\"responseDescription\":\"Everything went correctly\"}";
+//
+//        Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
+//    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="EnumController">
+    @Test
+    @DirtiesContext
+    public void getDogBreeds() throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/enum/getdogbreeds")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200)).andReturn();
+
+        String expectedResult = "{\"breeds\":[\"BULLDOG\",\"GERMAN_SHEPPARD\",\"LABRADOR\",\"GOLDEN_RETRIEVER\",\"BEAGLE\",\"OTHER\"]}";
+
+        Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
+    }
+    // </editor-fold>
 }

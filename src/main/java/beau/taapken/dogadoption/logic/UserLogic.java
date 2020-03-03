@@ -29,7 +29,6 @@ public class UserLogic implements IUser {
             }
         }
         catch(Exception ex){
-            response.setResponseCode(ResponseCode.Error);
             response.setResponseDescription(ex.toString());
         }
         return response;

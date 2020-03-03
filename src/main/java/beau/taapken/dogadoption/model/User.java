@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -26,4 +28,11 @@ public class User implements Serializable {
     @JsonProperty("Username")
     @Column(unique = true)
     private String Username;
+
+    @OneToMany(
+            mappedBy = "UUID",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Advert> adverts = new ArrayList<>();
 }
