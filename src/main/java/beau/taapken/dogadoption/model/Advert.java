@@ -1,21 +1,23 @@
 package beau.taapken.dogadoption.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "user")
+@Table(name = "advert")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class User implements Serializable {
+public class Advert  {
     @Id
     @NotNull
     @JsonProperty("UUID")
@@ -23,7 +25,19 @@ public class User implements Serializable {
     private String UUID;
 
     @NotNull
-    @JsonProperty("Username")
+    @JsonProperty("advertId")
     @Column(unique = true)
-    private String Username;
+    private String advertId;
+
+    @NotNull
+    @JsonProperty("title")
+    private String title;
+
+    @NotNull
+    @JsonProperty("description")
+    private String description;
+
+    @NotNull
+    @JsonProperty("race")
+    private String race;
 }
