@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UnitApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private final User user = new User("UUID", "Username", null);
-    private final Advert advert = new Advert(1, user, "title", "description", DogBreed.BEAGLE, 2);
+    private final Advert advert = new Advert(1, user, "img", "title", "description", DogBreed.BEAGLE, 2);
 
     @Autowired
     private UserLogic userLogic;

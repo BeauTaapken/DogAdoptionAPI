@@ -31,6 +31,10 @@ public class Advert  {
     private User UUID;
 
     @NotNull
+    @JsonProperty("img")
+    private String image;
+
+    @NotNull
     @JsonProperty("title")
     private String title;
 
