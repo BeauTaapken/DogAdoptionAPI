@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations="classpath:application-test.properties")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
 public class IntegrationApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
@@ -46,7 +47,6 @@ public class IntegrationApplicationTests {
 
     // <editor-fold defaultstate="collapsed" desc="UserController">
     @Test
-    @DirtiesContext
     public void addUserCorrectly() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -60,7 +60,6 @@ public class IntegrationApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void addUserIncorrectly() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,7 +73,6 @@ public class IntegrationApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void addExistingUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +94,6 @@ public class IntegrationApplicationTests {
     //TODO add a test where the database gets dropped?
 
     @Test
-    @DirtiesContext
     public void getExistingUsername() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -116,7 +113,6 @@ public class IntegrationApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void getNonExistingUsername() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/getuser/fakeUUID")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -150,7 +146,6 @@ public class IntegrationApplicationTests {
 
     // <editor-fold defaultstate="collapsed" desc="EnumController">
     @Test
-    @DirtiesContext
     public void getDogBreeds() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/enum/getdogbreeds")
                 .contentType(MediaType.APPLICATION_JSON)

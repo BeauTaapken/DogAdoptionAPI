@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VerificationLogic {
-    @Autowired
     private UserLogic userLogic;
+
+    @Autowired
+    public VerificationLogic(UserLogic userLogic){ this.userLogic = userLogic; }
 
     public boolean isUser(String idToken) throws FirebaseAuthException {
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);

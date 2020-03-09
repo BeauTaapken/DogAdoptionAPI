@@ -4,5 +4,5 @@ import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 
 public interface IAdvert {
-    Response addAdvert(Advert advert);
+//    Response addAdvert(Advert advert);
 }
