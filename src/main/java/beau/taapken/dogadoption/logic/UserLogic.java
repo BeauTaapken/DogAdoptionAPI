@@ -45,4 +45,15 @@ public class UserLogic implements IUser {
         }
         return null;
     }
+
+    public boolean hasUUID(String UUID){
+        try{
+            System.out.println(UUID);
+            return userRepository.existsById(UUID);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return false;
+    }
 }

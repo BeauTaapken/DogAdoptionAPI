@@ -3,6 +3,7 @@ package beau.taapken.dogadoption.controller;
 import beau.taapken.dogadoption.enumerator.ResponseCode;
 import beau.taapken.dogadoption.interfac.IUser;
 import beau.taapken.dogadoption.logic.UserLogic;
+import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import java.util.UUID;
 public class UserController implements IUser {
     @Autowired
     private UserLogic userLogic;
+    @Autowired
+    private VerificationLogic verificationLogic;
 
     @PostMapping("/adduser")
     public Response addUser(@RequestBody User user) {
