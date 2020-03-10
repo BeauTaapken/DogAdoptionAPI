@@ -12,15 +12,13 @@ import java.io.*;
 
 @Configuration
 public class FirebaseSetup implements CommandLineRunner {
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try{
             initializeFirebase();
         } catch(Exception ex) {
             System.out.println(ex);
         }
     }
-
-//public class FirebaseSetup {
 
     private void initializeFirebase() throws IOException {
         String baseURL = System.getProperty("user.dir");

@@ -10,8 +10,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @CrossOrigin
 @RequestMapping("/advert")
 @RestController
@@ -25,6 +23,7 @@ public class AdvertController implements IAdvert {
     public Response addAdvert(@RequestHeader String id, @RequestBody Advert advert) throws FirebaseAuthException {
         if(verificationLogic.isUser(id)){
             try{
+                System.out.println(id);
                 return advertLogic.addAdvert(advert);
             }
             catch (Exception ex){
