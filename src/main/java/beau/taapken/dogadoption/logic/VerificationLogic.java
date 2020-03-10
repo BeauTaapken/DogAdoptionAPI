@@ -1,5 +1,6 @@
 package beau.taapken.dogadoption.logic;
 
+import beau.taapken.dogadoption.model.Response;
 import com.google.firebase.auth.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,15 @@ public class VerificationLogic {
     public VerificationLogic(UserLogic userLogic){ this.userLogic = userLogic; }
 
     public boolean isUser(String idToken) throws FirebaseAuthException {
-        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-        String uid = decodedToken.getUid();
-        return userLogic.hasUUID(uid);
+        try{
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            decodedToken.getUid();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return false;
     }
 
 }

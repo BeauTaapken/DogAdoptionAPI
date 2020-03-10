@@ -4,16 +4,23 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 
-@Service
+@Configuration
 public class FirebaseSetup implements CommandLineRunner {
     public void run(String... args) throws Exception {
-        initializeFirebase();
+        try{
+            initializeFirebase();
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
     }
+
+//public class FirebaseSetup {
 
     private void initializeFirebase() throws IOException {
         String baseURL = System.getProperty("user.dir");

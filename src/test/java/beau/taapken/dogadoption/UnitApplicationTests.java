@@ -18,10 +18,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations="classpath:application-test.properties")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest
 public class UnitApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
-    private final User user = new User("UUID", "Username", null);
+    private final User user = new User("VtJbQmK1hogZLcAqXkhrnv6vs4n1", "Beau");
     private final Advert advert = new Advert(1, user, "img", "title", "description", DogBreed.BEAGLE, 2);
 
     @Autowired
@@ -36,7 +37,6 @@ public class UnitApplicationTests {
 
     // <editor-fold defaultstate="collapsed" desc="UserLogic tests">
     @Test
-    @DirtiesContext
     public void addUserCorrectly(){
         Response result = userLogic.addUser(user);
 
@@ -46,7 +46,6 @@ public class UnitApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void addUserIncorrectly(){
         Response result = userLogic.addUser(new User());
 
@@ -56,7 +55,6 @@ public class UnitApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void addExistingUser(){
         userLogic.addUser(user);
         Response result = userLogic.addUser(user);
@@ -67,18 +65,16 @@ public class UnitApplicationTests {
     }
 
     @Test
-    @DirtiesContext
     public void getExistingUsername(){
         userLogic.addUser(user);
         String result = userLogic.getUsername(user.getUUID());
 
-        String expected = "Username";
+        String expected = "Beau";
 
         Assert.assertEquals(expected, result);
     }
 
     @Test
-    @DirtiesContext
     public void getNonExistingUsername(){
         String result = userLogic.getUsername("UUID");
 
@@ -90,20 +86,20 @@ public class UnitApplicationTests {
 
     // <editor-fold defaultstate="collapsed" desc="AdvertLogic tests">
     //TODO don't know how to test this right now because of OneToMany
-//    @Test
-//    @DirtiesContext
-//    public void addAdvertCorrectly(){
-//        Response result = advertLogic.addAdvert(advert);
-//
-//        String expected = "{\"breeds\":[\"BULLDOG\",\"GERMAN_SHEPPARD\",\"LABRADOR\",\"GOLDEN_RETRIEVER\",\"BEAGLE\",\"OTHER\"]}";
-//
-//        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
-//    }
+    @Test
+    public void addAdvertCorrectly(){
+        userLogic.addUser(user);
+
+        Response result = advertLogic.addAdvert(advert);
+
+        String expected = "Done: Everything went correctly";
+
+        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="EnumLogic tests">
     @Test
-    @DirtiesContext
     public void getDogBreeds(){
         String result = enumLogic.getDogBreeds();
 

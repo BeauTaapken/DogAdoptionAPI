@@ -35,4 +35,9 @@ public class User implements Serializable {
             orphanRemoval = true
     )
     private List<Advert> adverts = new ArrayList<>();
+
+    public User(String uuid, String username) {
+        UUID = uuid;
+        Username = username;
+    }
 }

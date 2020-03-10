@@ -16,7 +16,7 @@ public class AdvertLogic implements IAdvert {
     public AdvertLogic(AdvertRepository advertRepository) { this.advertRepository = advertRepository; }
 
     public Response addAdvert(Advert advert) {
-        Response response = new Response(ResponseCode.Error, "Everything is broken here.");
+        Response response = new Response(ResponseCode.Error, "Placeholder");
         try{
             advertRepository.save(advert);
             response.setResponseCode(ResponseCode.Done);
