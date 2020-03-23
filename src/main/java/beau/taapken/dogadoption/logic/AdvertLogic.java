@@ -5,8 +5,13 @@ import beau.taapken.dogadoption.interfac.IAdvert;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.repository.AdvertRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdvertLogic implements IAdvert {
@@ -26,5 +31,10 @@ public class AdvertLogic implements IAdvert {
             response.setResponseDescription(ex.toString());
         }
         return response;
+    }
+
+    public List<Advert> getAdverts(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return advertRepository.findAll(pageable).toList();
     }
 }

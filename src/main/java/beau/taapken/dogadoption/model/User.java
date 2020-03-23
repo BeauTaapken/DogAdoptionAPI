@@ -1,5 +1,6 @@
 package beau.taapken.dogadoption.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,6 +35,7 @@ public class User implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonBackReference
     private List<Advert> adverts = new ArrayList<>();
 
     public User(String uuid, String username) {

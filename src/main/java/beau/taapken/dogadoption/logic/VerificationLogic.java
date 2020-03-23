@@ -16,5 +16,4 @@ public class VerificationLogic {
         }
         return false;
     }
-
 }

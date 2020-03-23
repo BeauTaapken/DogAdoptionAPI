@@ -36,7 +36,6 @@ public class UserLogic implements IUser {
 
     public String getUsername(String UUID) {
         try{
-            System.out.println(UUID);
             return userRepository.getOne(UUID).getUsername();
         }
         catch(Exception ex){

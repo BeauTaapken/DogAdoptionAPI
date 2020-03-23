@@ -7,16 +7,19 @@ import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+
+import java.sql.Blob;
 
 @TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
 public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
-    private User user = new User("UUID", "Username", null);
+    private User user = new User("UUID", "Username");
     private Response response = new Response(ResponseCode.Done, "test");
-    private final Advert advert = new Advert(1, user, "img", "title", "description", DogBreed.BEAGLE, 2);
+    private final Advert advert = new Advert(1, user, "img" , "title", "description", DogBreed.BEAGLE, 2);
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="User model tests">
@@ -109,7 +112,7 @@ public class ModelApplicationTests {
 
     @Test
     public void setUserUUID() {
-        advert.setUUID(new User("newUUID", "Username", null));
+        advert.setUUID(new User("newUUID", "Username"));
         String result = advert.getUUID().getUUID();
         String expected = "newUUID";
         Assert.assertEquals(expected, result);

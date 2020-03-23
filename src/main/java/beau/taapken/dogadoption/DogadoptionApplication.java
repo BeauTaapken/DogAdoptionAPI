@@ -12,10 +12,8 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class DogadoptionApplication {
-//    @Autowired
-//    private FirebaseSetup firebaseSetup
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SpringApplication.run(DogadoptionApplication.class, args);
     }
 }
