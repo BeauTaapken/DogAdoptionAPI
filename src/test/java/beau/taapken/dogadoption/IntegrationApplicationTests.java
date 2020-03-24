@@ -137,37 +137,38 @@ public class IntegrationApplicationTests {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="AdvertController">
-    @Test
-    public void addAdvertCorrectly() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(user))
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200)).andReturn();
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/advert/addadvert")
-                .header("id", idToken)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "\t\"UUID\": {\n" +
-                        "\t  \"UUID\": \"VtJbQmK1hogZLcAqXkhrnv6vs4n1\",\n" +
-                        "\t  \"Username\": null\n" +
-                        "\t},\n" +
-                        "\t\"img\": \"t\",\n" +
-                        "\t\"title\": \"t\",\n" +
-                        "\t\"description\": \"t\",\n" +
-                        "\t\"breed\": 1,\n" +
-                        "\t\"age\": 15\n" +
-                        "}")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200)).andReturn();
-
-        String expectedResult = "{\"responseCode\":\"Done\",\"responseDescription\":\"Everything went correctly\"}";
-
-        Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
-    }
-
     //TODO make a firebase test key that is usable
+//    @Test
+//    public void addAdvertCorrectly() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(gson.toJson(user))
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(200)).andReturn();
+//
+//        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/advert/addadvert")
+//                .header("id", idToken)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content("{\n" +
+//                        "\t\"UUID\": {\n" +
+//                        "\t  \"UUID\": \"VtJbQmK1hogZLcAqXkhrnv6vs4n1\",\n" +
+//                        "\t  \"Username\": null\n" +
+//                        "\t},\n" +
+//                        "\t\"img\": \"t\",\n" +
+//                        "\t\"title\": \"t\",\n" +
+//                        "\t\"description\": \"t\",\n" +
+//                        "\t\"breed\": 1,\n" +
+//                        "\t\"age\": 15\n" +
+//                        "}")
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(200)).andReturn();
+//
+//        String expectedResult = "{\"responseCode\":\"Done\",\"responseDescription\":\"Everything went correctly\"}";
+//
+//        Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
+//    }
+
+
 //    @Test
 //    public void addAdvertIncorrectToken() throws Exception {
 //        mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
