@@ -52,7 +52,6 @@ public class IntegrationApplicationTests {
     @Before
     public void setup() throws FirebaseAuthException {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-        idToken = FirebaseAuth.getInstance().createCustomToken("VtJbQmK1hogZLcAqXkhrnv6vs4n1");
     }
     // </editor-fold>
 
