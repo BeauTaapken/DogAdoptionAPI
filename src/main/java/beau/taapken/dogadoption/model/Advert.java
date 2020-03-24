@@ -27,11 +27,11 @@ public class Advert  {
     private int advertId;
 
     @NotNull
-//    @JsonProperty("UUID")
+    @JsonProperty("UUID")
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name="UUID")
     @ManyToOne
-    @JsonManagedReference
+//    @JsonManagedReference
     private User UUID;
 
     @NotNull

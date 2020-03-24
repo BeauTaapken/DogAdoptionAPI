@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,10 +24,9 @@ public class AdvertController implements IAdvert {
     private AdvertLogic advertLogic;
     @Autowired
     private VerificationLogic verificationLogic;
-    private final Gson gson = new Gson();
 
-    @PostMapping("/addadvert")
-    public Response addAdvert(@RequestHeader String id, @RequestBody Advert advert) throws FirebaseAuthException {
+    @PostMapping(value = "/addadvert")
+    public Response addAdvert(@RequestHeader String id, @RequestBody Advert advert) {
         if(verificationLogic.isUser(id)){
             try{
                 System.out.println(id);
@@ -42,8 +42,6 @@ public class AdvertController implements IAdvert {
     @GetMapping("/getAdverts")
     public List<Advert> getAdverts(@Param("page") int page, @Param("size") int size){
         List<Advert> t = advertLogic.getAdverts(page, size);
-        System.out.println(t);
-//        return gson.toJson(t);
         return t;
     }
 }

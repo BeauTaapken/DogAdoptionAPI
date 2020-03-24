@@ -17,7 +17,7 @@ install:
  - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
 
 script:
- - mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=animechat-rest
+ - mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=dogadoption-rest
 # - docker build -t docker.io/$DOCKER_NAME/animechat-rest:latest .
 #
 #after_success:

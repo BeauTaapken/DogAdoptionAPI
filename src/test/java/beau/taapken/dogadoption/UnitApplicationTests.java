@@ -16,6 +16,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations="classpath:application-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -85,7 +87,6 @@ public class UnitApplicationTests {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="AdvertLogic tests">
-    //TODO don't know how to test this right now because of OneToMany
     @Test
     public void addAdvertCorrectly(){
         userLogic.addUser(user);
@@ -95,6 +96,30 @@ public class UnitApplicationTests {
         String expected = "Done: Everything went correctly";
 
         Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+    }
+
+    @Test
+    public void getAdvertsCorrectly(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        List<Advert> result = advertLogic.getAdverts(0, 1);
+
+        int expected = 1;
+
+        Assert.assertEquals(expected, result.size());
+    }
+
+    @Test
+    public void getAdvertsIncorrectly(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        List<Advert> result = advertLogic.getAdverts(5, 1);
+
+        int expected = 0;
+
+        Assert.assertEquals(expected, result.size());
     }
     // </editor-fold>
 
