@@ -31,7 +31,7 @@ public class User implements Serializable {
     private String Username;
 
     @OneToMany(
-            mappedBy = "UUID",
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

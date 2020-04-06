@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -22,9 +23,10 @@ import javax.validation.constraints.NotNull;
 public class Advert  {
     @Id
     @JsonProperty("advertId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(unique = true)
-    private int advertId;
+    private String advertId;
 
     @NotNull
     @JsonProperty("UUID")
@@ -32,7 +34,7 @@ public class Advert  {
 //    @JoinColumn(name="UUID")
     @ManyToOne
 //    @JsonManagedReference
-    private User UUID;
+    private User user;
 
     @NotNull
     @JsonProperty("img")
@@ -54,4 +56,12 @@ public class Advert  {
     @NotNull
     @JsonProperty("age")
     private int age;
+
+    @NotNull
+    @JsonProperty("Longtitude")
+    private int longtitude;
+
+    @NotNull
+    @JsonProperty("Latitude")
+    private int latitude;
 }

@@ -19,7 +19,7 @@ public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private User user = new User("UUID", "Username");
     private Response response = new Response(ResponseCode.Done, "test");
-    private final Advert advert = new Advert(1, user, "img" , "title", "description", DogBreed.BEAGLE, 2);
+    private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1,1);
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="User model tests">
@@ -89,31 +89,31 @@ public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Advert model tests">
     @Test
     public void getAdvertId() {
-        int result = advert.getAdvertId();
-        int expected = 1;
+        String result = advert.getAdvertId();
+        String expected = "1";
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void setAdvertId() {
-        advert.setAdvertId(2);
-        int result = advert.getAdvertId();
-        int expected = 2;
+        advert.setAdvertId("2");
+        String result = advert.getAdvertId();
+        String expected = "2";
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void getUserUUID() {
         //getUUID is called 2 times because advert.getUUID gives a user, which can't be tested and the UUID of the user can
-        String result = advert.getUUID().getUUID();
+        String result = advert.getUser().getUUID();
         String expected = "UUID";
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void setUserUUID() {
-        advert.setUUID(new User("newUUID", "Username"));
-        String result = advert.getUUID().getUUID();
+        advert.setUser(new User("newUUID", "Username"));
+        String result = advert.getUser().getUUID();
         String expected = "newUUID";
         Assert.assertEquals(expected, result);
     }

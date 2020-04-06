@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IntegrationApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private final User user = new User("VtJbQmK1hogZLcAqXkhrnv6vs4n1", "Beau", null);
-    private final Advert advert = new Advert(1, user, "img", "title", "description", DogBreed.BEAGLE, 2);
+    private final Advert advert = new Advert("1", user, "img", "title", "description", DogBreed.BEAGLE, 2, 1, 1);
 
     private String idToken = null;
 
@@ -50,7 +50,7 @@ public class IntegrationApplicationTests {
     private WebApplicationContext wac;
 
     @Before
-    public void setup() throws FirebaseAuthException {
+    public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
     // </editor-fold>
