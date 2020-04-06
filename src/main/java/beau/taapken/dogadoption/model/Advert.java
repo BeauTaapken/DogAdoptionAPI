@@ -58,10 +58,10 @@ public class Advert  {
     private int age;
 
     @NotNull
-    @JsonProperty("Longtitude")
-    private int longtitude;
+    @JsonProperty("longtitude")
+    private float longtitude;
 
     @NotNull
-    @JsonProperty("Latitude")
-    private int latitude;
+    @JsonProperty("latitude")
+    private float latitude;
 }
