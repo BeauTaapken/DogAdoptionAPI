@@ -19,7 +19,7 @@ public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private User user = new User("UUID", "Username");
     private Response response = new Response(ResponseCode.Done, "test");
-    private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1,1);
+    private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace");
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="User model tests">

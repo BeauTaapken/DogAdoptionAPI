@@ -64,4 +64,8 @@ public class Advert  {
     @NotNull
     @JsonProperty("latitude")
     private float latitude;
+
+    @NotNull
+    @JsonProperty("place")
+    private String place;
 }
