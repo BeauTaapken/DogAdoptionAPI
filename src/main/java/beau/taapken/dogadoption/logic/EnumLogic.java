@@ -2,7 +2,7 @@ package beau.taapken.dogadoption.logic;
 
 import beau.taapken.dogadoption.enumerator.DogBreed;
 import beau.taapken.dogadoption.helper.EnumUtils;
-import beau.taapken.dogadoption.interfac.IEnum;
+import beau.taapken.dogadoption.interfaces.IEnum;
 import org.springframework.stereotype.Service;
 
 @Service

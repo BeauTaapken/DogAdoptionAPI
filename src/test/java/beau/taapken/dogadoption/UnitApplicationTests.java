@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -25,7 +26,7 @@ import java.util.List;
 public class UnitApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private final User user = new User("VtJbQmK1hogZLcAqXkhrnv6vs4n1", "Beau");
-    private final Advert advert = new Advert("1", user, "img", "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace");
+    private final Advert advert = new Advert("1", user, "img", "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace", LocalDateTime.now());
 
     @Autowired
     private UserLogic userLogic;

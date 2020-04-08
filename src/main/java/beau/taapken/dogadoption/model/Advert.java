@@ -3,6 +3,7 @@ package beau.taapken.dogadoption.model;
 import beau.taapken.dogadoption.enumerator.DogBreed;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.api.client.util.DateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "advert")
@@ -68,4 +70,8 @@ public class Advert  {
     @NotNull
     @JsonProperty("place")
     private String place;
+
+    @NotNull
+    @JsonProperty("date")
+    private LocalDateTime dateTime;
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.sql.Blob;
+import java.time.LocalDateTime;
 
 @TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
@@ -19,7 +20,7 @@ public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private User user = new User("UUID", "Username");
     private Response response = new Response(ResponseCode.Done, "test");
-    private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace");
+    private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace", LocalDateTime.now());
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="User model tests">

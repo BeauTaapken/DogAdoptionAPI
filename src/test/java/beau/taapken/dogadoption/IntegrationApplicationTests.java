@@ -25,9 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IntegrationApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private final User user = new User("VtJbQmK1hogZLcAqXkhrnv6vs4n1", "Beau", null);
-    private final Advert advert = new Advert("1", user, "img", "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace");
+    private final Advert advert = new Advert("1", user, "img", "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace", LocalDateTime.now());
 
     private String idToken = null;
 

@@ -1,7 +1,7 @@
 package beau.taapken.dogadoption.controller;
 
 import beau.taapken.dogadoption.enumerator.ResponseCode;
-import beau.taapken.dogadoption.interfac.IAdvert;
+import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Advert;

@@ -1,7 +1,7 @@
 package beau.taapken.dogadoption.logic;
 
 import beau.taapken.dogadoption.enumerator.ResponseCode;
-import beau.taapken.dogadoption.interfac.IUser;
+import beau.taapken.dogadoption.interfaces.IUser;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import beau.taapken.dogadoption.repository.UserRepository;
