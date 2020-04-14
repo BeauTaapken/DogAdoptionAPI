@@ -9,10 +9,6 @@ env:
 services:
  - docker
 
-stages:
-  - name: after_success
-    if: branch = master
-
 addons:
  sonarcloud:
   organization: "beautaapken" # the key of the org you chose at step #
