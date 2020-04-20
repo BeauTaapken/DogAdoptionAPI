@@ -37,7 +37,12 @@ public class AdvertController implements IAdvert {
 
     @GetMapping("/getadverts")
     public List<Advert> getAdverts(@Param("page") int page, @Param("size") int size){
-        List<Advert> t = advertLogic.getAdverts(page, size);
-        return t;
+        return advertLogic.getAdverts(page, size);
+    }
+
+    @DeleteMapping("/deleteadvert")
+    public Response deleteAdvert(@RequestHeader String id) {
+
+        return advertLogic.deleteAdvert(id);
     }
 }

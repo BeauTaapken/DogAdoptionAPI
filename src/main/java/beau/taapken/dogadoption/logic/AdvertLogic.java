@@ -38,4 +38,17 @@ public class AdvertLogic implements IAdvert {
         Pageable pageable = PageRequest.of(page, size);
         return advertRepository.findAllByOrderByDateTimeDesc(pageable);
     }
+
+    public Response deleteAdvert(String id){
+        Response response = new Response(ResponseCode.Error, "Placeholder");
+        try {
+            advertRepository.deleteById(id);
+            response.setResponseCode(ResponseCode.Done);
+            response.setResponseDescription("Deleted advert");
+        }
+        catch (Exception ex){
+            response.setResponseDescription(ex.getMessage());
+        }
+        return response;
+    }
 }
