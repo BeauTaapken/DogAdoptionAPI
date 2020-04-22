@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdvertLogic implements IAdvert {
@@ -50,5 +51,11 @@ public class AdvertLogic implements IAdvert {
             response.setResponseDescription(ex.getMessage());
         }
         return response;
+    }
+
+    public boolean userIsAdvertOwner(String id, String UUID){
+        Advert advert = advertRepository.getOne(id);
+        System.out.println(advert);
+        return UUID.equals(advert.getUser().getUUID());
     }
 }

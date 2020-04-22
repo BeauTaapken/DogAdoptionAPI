@@ -6,6 +6,7 @@ import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
+import beau.taapken.dogadoption.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,11 @@ public class AdvertController implements IAdvert {
     private VerificationLogic verificationLogic;
 
     @PostMapping(value = "/addadvert")
-    public Response addAdvert(@RequestHeader String id, @RequestBody Advert advert) {
-        if(verificationLogic.isUser(id)){
+    public Response addAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert) {
+        String UUID = verificationLogic.isUser(firebaseToken);
+        if(UUID != null){
+            advert.setUser(new User(UUID, null));
             try{
-                System.out.println(id);
                 return advertLogic.addAdvert(advert);
             }
             catch (Exception ex){
@@ -40,9 +42,27 @@ public class AdvertController implements IAdvert {
         return advertLogic.getAdverts(page, size);
     }
 
-    @DeleteMapping("/deleteadvert")
-    public Response deleteAdvert(@RequestHeader String id) {
+    @PutMapping("/updateadvert")
+    public Response updateAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert){
+        String UUID = verificationLogic.isUser(firebaseToken);
+        if(UUID != null){
+            if(advertLogic.userIsAdvertOwner(advert.getAdvertId(), UUID)){
 
-        return advertLogic.deleteAdvert(id);
+            }
+            return new Response(ResponseCode.Error, "You are not allowed to update another users advert");
+        }
+        return new Response(ResponseCode.Error, "You need to have an account to update your adverts");
+    }
+
+    @DeleteMapping("/deleteadvert")
+    public Response deleteAdvert(@RequestHeader String firebaseToken, @RequestHeader String advertId) {
+        String UUID = verificationLogic.isUser(firebaseToken);
+        if(UUID != null) {
+            if (advertLogic.userIsAdvertOwner(advertId, UUID)) {
+                return advertLogic.deleteAdvert(advertId);
+            }
+            return new Response(ResponseCode.Error, "You are not allowed to delete another users advert");
+        }
+        return new Response(ResponseCode.Error, "You need to have an account to delete your adverts");
     }
 }
