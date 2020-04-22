@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AdvertLogic implements IAdvert {
@@ -38,6 +37,19 @@ public class AdvertLogic implements IAdvert {
     public List<Advert> getAdverts(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return advertRepository.findAllByOrderByDateTimeDesc(pageable);
+    }
+
+    public Response updateAdvert(Advert advert){
+        Response response = new Response(ResponseCode.Error, "Placeholder");
+        try{
+            advertRepository.updateAdvert(advert.getAdvertId(), advert);
+            response.setResponseCode(ResponseCode.Done);
+            response.setResponseDescription("Everything went correctly");
+        }
+        catch(Exception ex){
+            response.setResponseDescription(ex.toString());
+        }
+        return response;
     }
 
     public Response deleteAdvert(String id){
