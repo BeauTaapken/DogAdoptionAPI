@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert, String> {
     @Modifying
-    @Query("UPDATE Advert advert SET advert = :advert WHERE advert.advertId = :advertId")
-    void updateAdvert(String advertId, Advert advert);
+    @Query("UPDATE Advert advert SET advert.age = :age, advert.breed = :breed, advert.description = :description, advert.image = :image, advert.title = :title, advert.latitude = :latitude, advert.longtitude = :longtitude, advert.place = :place WHERE advert.advertId = :advertId")
+    void updateAdvert(String advertId, int age, int breed, String description, String image, String title, float latitude, float longtitude, String place);
 
-    List<Advert> findAllByOrderByDateTimeDesc(Pageable pageable);
+    List<Advert> findAllByOrderByDateTimeAsc(Pageable pageable);
 }

@@ -71,7 +71,6 @@ public class Advert  {
     @JsonProperty("place")
     private String place;
 
-    @NotNull
     @JsonProperty("date")
     private LocalDateTime dateTime;
 }

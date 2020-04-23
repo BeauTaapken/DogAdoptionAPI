@@ -47,7 +47,7 @@ public class AdvertController implements IAdvert {
         String UUID = verificationLogic.isUser(firebaseToken);
         if(UUID != null){
             if(advertLogic.userIsAdvertOwner(advert.getAdvertId(), UUID)){
-                advertLogic.updateAdvert(advert);
+                return advertLogic.updateAdvert(advert);
             }
             return new Response(ResponseCode.Error, "You are not allowed to update another users advert");
         }

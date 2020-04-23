@@ -1,5 +1,6 @@
 package beau.taapken.dogadoption.logic;
 
+import beau.taapken.dogadoption.enumerator.DogBreed;
 import beau.taapken.dogadoption.enumerator.ResponseCode;
 import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.model.Advert;
@@ -36,13 +37,16 @@ public class AdvertLogic implements IAdvert {
 
     public List<Advert> getAdverts(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        return advertRepository.findAllByOrderByDateTimeDesc(pageable);
+        return advertRepository.findAllByOrderByDateTimeAsc(pageable);
     }
 
     public Response updateAdvert(Advert advert){
         Response response = new Response(ResponseCode.Error, "Placeholder");
         try{
-            advertRepository.updateAdvert(advert.getAdvertId(), advert);
+            advertRepository.save(advert);
+
+            //TODO check if possible to have getbreed.ordinal work, without error
+            //advertRepository.updateAdvert(advert.getAdvertId(), advert.getAge(), advert.getBreed().ordinal(), advert.getDescription(), advert.getImage(), advert.getTitle(), advert.getLatitude(), advert.getLongtitude(), advert.getPlace());
             response.setResponseCode(ResponseCode.Done);
             response.setResponseDescription("Everything went correctly");
         }
@@ -67,7 +71,8 @@ public class AdvertLogic implements IAdvert {
 
     public boolean userIsAdvertOwner(String id, String UUID){
         Advert advert = advertRepository.getOne(id);
-        System.out.println(advert);
+        System.out.println(advert.getUser().getUUID());
+        System.out.println(UUID);
         return UUID.equals(advert.getUser().getUUID());
     }
 }
