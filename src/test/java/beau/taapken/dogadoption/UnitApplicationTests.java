@@ -1,6 +1,7 @@
 package beau.taapken.dogadoption;
 
 import beau.taapken.dogadoption.enumerator.DogBreed;
+import beau.taapken.dogadoption.enumerator.ResponseCode;
 import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.EnumLogic;
 import beau.taapken.dogadoption.logic.UserLogic;
@@ -121,6 +122,72 @@ public class UnitApplicationTests {
         int expected = 0;
 
         Assert.assertEquals(expected, result.size());
+    }
+
+    @Test
+    public void deleteExistingAdvert(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        //Need to get just added advert, id set in original advert is overwritten with random UUID
+        List<Advert> advert = advertLogic.getAdverts(0, 1);
+
+        Response result = advertLogic.deleteAdvert(advert.get(0).getAdvertId());
+
+        String expected = "Deleted advert";
+
+        Assert.assertEquals(expected, result.getResponseDescription());
+    }
+
+    @Test
+    public void deleteNonExistingAdvert(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        Response result = advertLogic.deleteAdvert("50");
+
+        String expected = "No class beau.taapken.dogadoption.model.Advert entity with id 50 exists!";
+
+        Assert.assertEquals(expected, result.getResponseDescription());
+    }
+
+    @Test
+    public void updateExistingAdvert(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        List<Advert> oldAdverts = advertLogic.getAdverts(0, 1);
+
+        Advert ad = advert;
+        ad.setAdvertId(oldAdverts.get(0).getAdvertId());
+        ad.setDescription("new description");
+
+        advertLogic.updateAdvert(ad);
+
+        List<Advert> adverts = advertLogic.getAdverts(0, 1);
+
+        String expected = "new description";
+
+        //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
+        Assert.assertEquals(expected, adverts.get(0).getDescription());
+    }
+
+    @Test
+    public void updateNonExistingAdvert(){
+        userLogic.addUser(user);
+        advertLogic.addAdvert(advert);
+
+        Advert ad = advert;
+        ad.setDescription("new description");
+
+        advertLogic.updateAdvert(ad);
+
+        List<Advert> adverts = advertLogic.getAdverts(0, 1);
+
+        String expected = "description";
+
+        //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
+        Assert.assertEquals(expected, adverts.get(0).getDescription());
     }
     // </editor-fold>
 

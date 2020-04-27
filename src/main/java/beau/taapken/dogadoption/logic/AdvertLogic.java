@@ -6,6 +6,8 @@ import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.repository.AdvertRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,17 +42,16 @@ public class AdvertLogic implements IAdvert {
         return advertRepository.findAllByOrderByDateTimeAsc(pageable);
     }
 
+
     public Response updateAdvert(Advert advert){
         Response response = new Response(ResponseCode.Error, "Placeholder");
         try{
-            advertRepository.save(advert);
-
-            //TODO check if possible to have getbreed.ordinal work, without error
-            //advertRepository.updateAdvert(advert.getAdvertId(), advert.getAge(), advert.getBreed().ordinal(), advert.getDescription(), advert.getImage(), advert.getTitle(), advert.getLatitude(), advert.getLongtitude(), advert.getPlace());
+            advertRepository.updateAdvert(advert.getAdvertId(), advert.getAge(), advert.getBreed(), advert.getDescription(), advert.getImage(), advert.getTitle(), advert.getLatitude(), advert.getLongtitude(), advert.getPlace());
             response.setResponseCode(ResponseCode.Done);
             response.setResponseDescription("Everything went correctly");
         }
         catch(Exception ex){
+            System.out.println(ex);
             response.setResponseDescription(ex.toString());
         }
         return response;
@@ -71,8 +72,6 @@ public class AdvertLogic implements IAdvert {
 
     public boolean userIsAdvertOwner(String id, String UUID){
         Advert advert = advertRepository.getOne(id);
-        System.out.println(advert.getUser().getUUID());
-        System.out.println(UUID);
         return UUID.equals(advert.getUser().getUUID());
     }
 }

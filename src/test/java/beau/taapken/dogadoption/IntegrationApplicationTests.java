@@ -135,7 +135,7 @@ public class IntegrationApplicationTests {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="AdvertController">
-    //TODO make a firebase test key that is usable
+    //TODO make a firebase test key that is always usable
 //    @Test
 //    public void addAdvertCorrectly() throws Exception {
 //        mockMvc.perform(MockMvcRequestBuilders.post("/user/adduser")
