@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VerificationLogic {
-    public String isUser(String idToken) {
+    public String GetUUID(String idToken) {
         try{
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
             return decodedToken.getUid();

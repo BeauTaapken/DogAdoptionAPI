@@ -24,7 +24,7 @@ public class AdvertController implements IAdvert {
 
     @PostMapping(value = "/addadvert")
     public Response addAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert) {
-        String UUID = verificationLogic.isUser(firebaseToken);
+        String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null){
             advert.setUser(new User(UUID, null));
             try{
@@ -44,7 +44,7 @@ public class AdvertController implements IAdvert {
 
     @PutMapping("/updateadvert")
     public Response updateAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert){
-        String UUID = verificationLogic.isUser(firebaseToken);
+        String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null){
             if(advertLogic.userIsAdvertOwner(advert.getAdvertId(), UUID)){
                 return advertLogic.updateAdvert(advert);
@@ -56,7 +56,7 @@ public class AdvertController implements IAdvert {
 
     @DeleteMapping("/deleteadvert")
     public Response deleteAdvert(@RequestHeader String firebaseToken, @RequestHeader String advertId) {
-        String UUID = verificationLogic.isUser(firebaseToken);
+        String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null) {
             if (advertLogic.userIsAdvertOwner(advertId, UUID)) {
                 return advertLogic.deleteAdvert(advertId);

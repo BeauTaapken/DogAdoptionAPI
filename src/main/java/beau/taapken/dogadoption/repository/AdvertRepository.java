@@ -24,5 +24,5 @@ public interface AdvertRepository extends JpaRepository<Advert, String> {
 //    @Transactional(readOnly = false, isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     //void updateAdvert(@Param("advertId") String advertId, @Param("Advert") Advert advert);
 
-    List<Advert> findAllByOrderByDateTimeAsc(Pageable pageable);
+    List<Advert> findAllByOrderByDateTimeDesc(Pageable pageable);
 }

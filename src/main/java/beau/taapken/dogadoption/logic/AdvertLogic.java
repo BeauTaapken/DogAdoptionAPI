@@ -39,7 +39,7 @@ public class AdvertLogic implements IAdvert {
 
     public List<Advert> getAdverts(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        return advertRepository.findAllByOrderByDateTimeAsc(pageable);
+        return advertRepository.findAllByOrderByDateTimeDesc(pageable);
     }
 
 
