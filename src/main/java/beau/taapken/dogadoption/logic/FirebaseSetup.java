@@ -3,6 +3,7 @@ package beau.taapken.dogadoption.logic;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,13 @@ import org.springframework.util.ResourceUtils;
 import java.io.*;
 
 @Configuration
+@Log4j2
 public class FirebaseSetup implements CommandLineRunner {
     public void run(String... args) {
         try{
             initializeFirebase();
         } catch(Exception ex) {
-            System.out.println(ex);
+            log.error(ex);
         }
     }
 

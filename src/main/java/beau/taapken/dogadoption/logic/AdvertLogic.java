@@ -6,6 +6,7 @@ import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.repository.AdvertRepository;
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Log4j2
 public class AdvertLogic implements IAdvert {
     private AdvertRepository advertRepository;
 
@@ -32,6 +34,7 @@ public class AdvertLogic implements IAdvert {
             response.setResponseDescription("Everything went correctly");
         }
         catch(Exception ex){
+            log.error(ex);
             response.setResponseDescription(ex.toString());
         }
         return response;
@@ -51,7 +54,7 @@ public class AdvertLogic implements IAdvert {
             response.setResponseDescription("Everything went correctly");
         }
         catch(Exception ex){
-            System.out.println(ex);
+            log.error(ex);
             response.setResponseDescription(ex.toString());
         }
         return response;
@@ -65,6 +68,7 @@ public class AdvertLogic implements IAdvert {
             response.setResponseDescription("Deleted advert");
         }
         catch (Exception ex){
+            log.error(ex);
             response.setResponseDescription(ex.getMessage());
         }
         return response;

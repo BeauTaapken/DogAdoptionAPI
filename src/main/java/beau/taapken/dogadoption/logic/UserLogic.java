@@ -5,10 +5,12 @@ import beau.taapken.dogadoption.interfaces.IUser;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import beau.taapken.dogadoption.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class UserLogic implements IUser {
     private UserRepository userRepository;
 
@@ -29,6 +31,7 @@ public class UserLogic implements IUser {
             }
         }
         catch(Exception ex){
+            log.error(ex);
             response.setResponseDescription(ex.toString());
         }
         return response;
@@ -39,7 +42,7 @@ public class UserLogic implements IUser {
             return userRepository.getOne(UUID).getUsername();
         }
         catch(Exception ex){
-            System.out.println(ex);
+            log.error(ex);
         }
         return null;
     }

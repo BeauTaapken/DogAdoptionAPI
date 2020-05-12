@@ -7,6 +7,7 @@ import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/advert")
 @RestController
+@Log4j2
 public class AdvertController implements IAdvert {
     @Autowired
     private AdvertLogic advertLogic;
@@ -31,6 +33,7 @@ public class AdvertController implements IAdvert {
                 return advertLogic.addAdvert(advert);
             }
             catch (Exception ex){
+                log.error(ex);
                 return new Response(ResponseCode.Error, ex.toString());
             }
         }
