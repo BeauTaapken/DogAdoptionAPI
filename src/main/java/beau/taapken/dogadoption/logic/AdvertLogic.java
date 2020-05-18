@@ -1,17 +1,13 @@
 package beau.taapken.dogadoption.logic;
 
-import beau.taapken.dogadoption.enumerator.DogBreed;
-import beau.taapken.dogadoption.enumerator.ResponseCode;
-import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.model.Advert;
-import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.repository.AdvertRepository;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,25 +15,22 @@ import java.util.List;
 
 @Service
 @Log4j2
-public class AdvertLogic implements IAdvert {
+public class AdvertLogic {
     private AdvertRepository advertRepository;
 
     @Autowired
     public AdvertLogic(AdvertRepository advertRepository) { this.advertRepository = advertRepository; }
 
-    public Response addAdvert(Advert advert) {
-        Response response = new Response(ResponseCode.Error, "Placeholder");
+    public ResponseEntity addAdvert(Advert advert) {
         try{
             advert.setDateTime(LocalDateTime.now());
             advertRepository.save(advert);
-            response.setResponseCode(ResponseCode.Done);
-            response.setResponseDescription("Everything went correctly");
+            return new ResponseEntity<>("Everything went correctly", HttpStatus.OK);
         }
         catch(Exception ex){
             log.error(ex);
-            response.setResponseDescription(ex.toString());
+            return new ResponseEntity<>(ex.toString(), HttpStatus.REQUEST_TIMEOUT);
         }
-        return response;
     }
 
     public List<Advert> getAdverts(int page, int size){
@@ -46,32 +39,26 @@ public class AdvertLogic implements IAdvert {
     }
 
 
-    public Response updateAdvert(Advert advert){
-        Response response = new Response(ResponseCode.Error, "Placeholder");
+    public ResponseEntity updateAdvert(Advert advert){
         try{
             advertRepository.updateAdvert(advert.getAdvertId(), advert.getAge(), advert.getBreed(), advert.getDescription(), advert.getImage(), advert.getTitle(), advert.getLatitude(), advert.getLongtitude(), advert.getPlace());
-            response.setResponseCode(ResponseCode.Done);
-            response.setResponseDescription("Everything went correctly");
+            return new ResponseEntity<>("Everything went correctly", HttpStatus.OK);
         }
         catch(Exception ex){
             log.error(ex);
-            response.setResponseDescription(ex.toString());
+            return new ResponseEntity<>(ex.toString(), HttpStatus.REQUEST_TIMEOUT);
         }
-        return response;
     }
 
-    public Response deleteAdvert(String id){
-        Response response = new Response(ResponseCode.Error, "Placeholder");
+    public ResponseEntity deleteAdvert(String id){
         try {
             advertRepository.deleteById(id);
-            response.setResponseCode(ResponseCode.Done);
-            response.setResponseDescription("Deleted advert");
+            return new ResponseEntity<>("Everything went correctly", HttpStatus.OK);
         }
         catch (Exception ex){
             log.error(ex);
-            response.setResponseDescription(ex.getMessage());
+            return new ResponseEntity<>(ex.toString(), HttpStatus.REQUEST_TIMEOUT);
         }
-        return response;
     }
 
     public boolean userIsAdvertOwner(String id, String UUID){

@@ -1,18 +1,13 @@
 package beau.taapken.dogadoption;
 
 import beau.taapken.dogadoption.enumerator.DogBreed;
-import beau.taapken.dogadoption.logic.FirebaseSetup;
-import beau.taapken.dogadoption.logic.UserLogic;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -62,7 +57,7 @@ public class IntegrationApplicationTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200)).andReturn();
 
-        String expectedResult = "{\"responseCode\":\"Done\",\"responseDescription\":\"Everything went correctly\"}";
+        String expectedResult = "Everything went correctly";
 
         Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
     }
@@ -73,9 +68,9 @@ public class IntegrationApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(new User()))
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200)).andReturn();
+                .andExpect(status().is(408)).andReturn();
 
-        String expectedResult = "{\"responseCode\":\"Error\",\"responseDescription\":\"org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null!; nested exception is java.lang.IllegalArgumentException: The given id must not be null!\"}";
+        String expectedResult = "org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null!; nested exception is java.lang.IllegalArgumentException: The given id must not be null!";
 
         Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
     }
@@ -92,9 +87,9 @@ public class IntegrationApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(user))
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200)).andReturn();
+                .andExpect(status().is(403)).andReturn();
 
-        String expectedResult = "{\"responseCode\":\"Existing\",\"responseDescription\":\"User already exists\"}";
+        String expectedResult = "User already exists with given id";
 
         Assert.assertEquals(expectedResult, result.getResponse().getContentAsString());
     }

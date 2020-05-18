@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -42,30 +43,30 @@ public class UnitApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="UserLogic tests">
     @Test
     public void addUserCorrectly(){
-        Response result = userLogic.addUser(user);
+        ResponseEntity result = userLogic.addUser(user);
 
-        String expected = "Done: Everything went correctly";
+        String expected = "200 OK: Everything went correctly";
 
-        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test
     public void addUserIncorrectly(){
-        Response result = userLogic.addUser(new User());
+        ResponseEntity result = userLogic.addUser(new User());
 
-        String expected = "Error: org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null!; nested exception is java.lang.IllegalArgumentException: The given id must not be null!";
+        String expected = "408 REQUEST_TIMEOUT: org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null!; nested exception is java.lang.IllegalArgumentException: The given id must not be null!";
 
-        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test
     public void addExistingUser(){
         userLogic.addUser(user);
-        Response result = userLogic.addUser(user);
+        ResponseEntity result = userLogic.addUser(user);
 
-        String expected = "Existing: User already exists";
+        String expected = "403 FORBIDDEN: User already exists with given id";
 
-        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test
@@ -93,11 +94,11 @@ public class UnitApplicationTests {
     public void addAdvertCorrectly(){
         userLogic.addUser(user);
 
-        Response result = advertLogic.addAdvert(advert);
+        ResponseEntity result = advertLogic.addAdvert(advert);
 
-        String expected = "Done: Everything went correctly";
+        String expected = "200 OK: Everything went correctly";
 
-        Assert.assertEquals(expected, result.getResponseCode() + ": " + result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test
@@ -132,11 +133,11 @@ public class UnitApplicationTests {
         //Need to get just added advert, id set in original advert is overwritten with random UUID
         List<Advert> advert = advertLogic.getAdverts(0, 1);
 
-        Response result = advertLogic.deleteAdvert(advert.get(0).getAdvertId());
+        ResponseEntity result = advertLogic.deleteAdvert(advert.get(0).getAdvertId());
 
-        String expected = "Deleted advert";
+        String expected = "200 OK: Everything went correctly";
 
-        Assert.assertEquals(expected, result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test
@@ -144,11 +145,11 @@ public class UnitApplicationTests {
         userLogic.addUser(user);
         advertLogic.addAdvert(advert);
 
-        Response result = advertLogic.deleteAdvert("50");
+        ResponseEntity result = advertLogic.deleteAdvert("50");
 
-        String expected = "No class beau.taapken.dogadoption.model.Advert entity with id 50 exists!";
+        String expected = "408 REQUEST_TIMEOUT: org.springframework.dao.EmptyResultDataAccessException: No class beau.taapken.dogadoption.model.Advert entity with id 50 exists!";
 
-        Assert.assertEquals(expected, result.getResponseDescription());
+        Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
     @Test

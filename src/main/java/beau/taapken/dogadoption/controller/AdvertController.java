@@ -1,15 +1,14 @@
 package beau.taapken.dogadoption.controller;
 
-import beau.taapken.dogadoption.enumerator.ResponseCode;
-import beau.taapken.dogadoption.interfaces.IAdvert;
 import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Advert;
-import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +17,14 @@ import java.util.List;
 @RequestMapping("/advert")
 @RestController
 @Log4j2
-public class AdvertController implements IAdvert {
+public class AdvertController {
     @Autowired
     private AdvertLogic advertLogic;
     @Autowired
     private VerificationLogic verificationLogic;
 
     @PostMapping(value = "/addadvert")
-    public Response addAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert) {
+    public ResponseEntity addAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert) {
         String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null){
             advert.setUser(new User(UUID, null));
@@ -34,10 +33,10 @@ public class AdvertController implements IAdvert {
             }
             catch (Exception ex){
                 log.error(ex);
-                return new Response(ResponseCode.Error, ex.toString());
+                return new ResponseEntity<>(ex.toString(), HttpStatus.REQUEST_TIMEOUT);
             }
         }
-        return new Response(ResponseCode.Error, "Account could not be found. Please don't use this api if you haven't added a account.");
+        return new ResponseEntity<>("Account could not be found. Please don't use this api if you haven't added a account.", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("/getadverts")
@@ -46,26 +45,26 @@ public class AdvertController implements IAdvert {
     }
 
     @PutMapping("/updateadvert")
-    public Response updateAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert){
+    public ResponseEntity updateAdvert(@RequestHeader String firebaseToken, @RequestBody Advert advert){
         String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null){
             if(advertLogic.userIsAdvertOwner(advert.getAdvertId(), UUID)){
                 return advertLogic.updateAdvert(advert);
             }
-            return new Response(ResponseCode.Error, "You are not allowed to update another users advert");
+            return new ResponseEntity<>("You are not allowed to update another users advert", HttpStatus.FORBIDDEN);
         }
-        return new Response(ResponseCode.Error, "You need to have an account to update your adverts");
+        return new ResponseEntity<>("You need to have an account to update your adverts", HttpStatus.FORBIDDEN);
     }
 
     @DeleteMapping("/deleteadvert")
-    public Response deleteAdvert(@RequestHeader String firebaseToken, @RequestHeader String advertId) {
+    public ResponseEntity deleteAdvert(@RequestHeader String firebaseToken, @RequestHeader String advertId) {
         String UUID = verificationLogic.GetUUID(firebaseToken);
         if(UUID != null) {
             if (advertLogic.userIsAdvertOwner(advertId, UUID)) {
                 return advertLogic.deleteAdvert(advertId);
             }
-            return new Response(ResponseCode.Error, "You are not allowed to delete another users advert");
+            return new ResponseEntity<>("You are not allowed to delete another users advert", HttpStatus.FORBIDDEN);
         }
-        return new Response(ResponseCode.Error, "You need to have an account to delete your adverts");
+        return new ResponseEntity<>("You need to have an account to delete your adverts", HttpStatus.FORBIDDEN);
     }
 }
