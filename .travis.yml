@@ -17,9 +17,9 @@ install:
  - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
 
 script:
- - mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=BeauTaapken_DogAdoptionAPI
+ - mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=DogAdoptionAPI
  - docker build -t docker.io/$DOCKER_NAME/dogadoption-rest:latest .
 
 after_success:
-    - docker login -u $DOCKER_NAME -p $DOCKER_PASSWORD
-    - docker push docker.io/$DOCKER_NAME/dogadoption-rest:latest
+ - docker login -u $DOCKER_NAME -p $DOCKER_PASSWORD
+ - docker push docker.io/$DOCKER_NAME/dogadoption-rest:latest
