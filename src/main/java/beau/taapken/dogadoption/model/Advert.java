@@ -1,13 +1,10 @@
 package beau.taapken.dogadoption.model;
 
 import beau.taapken.dogadoption.enumerator.DogBreed;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import beau.taapken.dogadoption.projection.IGetAdvert;
+import beau.taapken.dogadoption.projection.IAdvertFeed;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.api.client.util.DateTime;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -20,9 +17,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class Advert  {
+@Data
+public class Advert implements IGetAdvert, IAdvertFeed {
     @Id
     @JsonProperty("advertId")
     @GeneratedValue(generator = "system-uuid")
@@ -32,10 +28,7 @@ public class Advert  {
 
     @NotNull
     @JsonProperty("UUID")
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="UUID")
     @ManyToOne
-//    @JsonManagedReference
     private User user;
 
     @NotNull

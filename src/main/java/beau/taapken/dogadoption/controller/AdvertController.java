@@ -4,6 +4,8 @@ import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.VerificationLogic;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.model.User;
+import beau.taapken.dogadoption.projection.IGetAdvert;
+import beau.taapken.dogadoption.projection.IAdvertFeed;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -39,9 +41,14 @@ public class AdvertController {
         return new ResponseEntity<>("Account could not be found. Please don't use this api if you haven't added a account.", HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("/getadverts")
-    public List<Advert> getAdverts(@Param("page") int page, @Param("size") int size){
-        return advertLogic.getAdverts(page, size);
+    @GetMapping("/getadvert/{advertId}")
+    public IGetAdvert getAdvert(@PathVariable String advertId){
+        return advertLogic.getAdvert(advertId);
+    }
+
+    @GetMapping("/getadvertpreviews")
+    public List<IAdvertFeed> getAdvertPreviews(@Param("page") int page, @Param("size") int size){
+        return advertLogic.getAdvertPreviews(page, size);
     }
 
     @PutMapping("/updateadvert")

@@ -3,15 +3,12 @@ package beau.taapken.dogadoption;
 import beau.taapken.dogadoption.enumerator.DogBreed;
 import beau.taapken.dogadoption.enumerator.ResponseCode;
 import beau.taapken.dogadoption.model.Advert;
-import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 @TestPropertySource(locations="classpath:application-test.properties")
@@ -19,7 +16,6 @@ import java.time.LocalDateTime;
 public class ModelApplicationTests {
     // <editor-fold defaultstate="collapsed" desc="Setup">
     private User user = new User("UUID", "Username");
-    private Response response = new Response(ResponseCode.Done, "test");
     private final Advert advert = new Advert("1", user, "img" , "title", "description", DogBreed.BEAGLE, 2, 1, 1, "testplace", LocalDateTime.now());
     // </editor-fold>
 
@@ -51,38 +47,6 @@ public class ModelApplicationTests {
         user.setUsername("newUsername");
         String result = user.getUsername();
         String expected = "newUsername";
-        Assert.assertEquals(expected, result);
-    }
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Response model tests">
-    @Test
-    public void getResponseCode() {
-        ResponseCode result = response.getResponseCode();
-        ResponseCode expected = ResponseCode.Done;
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
-    public void setResponseCode() {
-        response.setResponseCode(ResponseCode.Existing);
-        ResponseCode result = response.getResponseCode();
-        ResponseCode expected = ResponseCode.Existing;
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
-    public void getResponseDescription() {
-        String result = response.getResponseDescription();
-        String expected = "test";
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
-    public void setResponseDescription() {
-        response.setResponseDescription("newTest");
-        String result = response.getResponseDescription();
-        String expected = "newTest";
         Assert.assertEquals(expected, result);
     }
     // </editor-fold>
@@ -127,25 +91,9 @@ public class ModelApplicationTests {
     }
 
     @Test
-    public void setTitle() {
-        advert.setTitle("newTitle");
-        String result = advert.getTitle();
-        String expected = "newTitle";
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
     public void getDescription() {
         String result = advert.getDescription();
         String expected = "description";
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
-    public void setDescription() {
-        advert.setDescription("newDescription");
-        String result = advert.getDescription();
-        String expected = "newDescription";
         Assert.assertEquals(expected, result);
     }
 
@@ -157,25 +105,9 @@ public class ModelApplicationTests {
     }
 
     @Test
-    public void setDogBreed() {
-        advert.setBreed(DogBreed.BULLDOG);
-        DogBreed result = advert.getBreed();
-        DogBreed expected = DogBreed.BULLDOG;
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
     public void getAge() {
         int result = advert.getAge();
         int expected = 2;
-        Assert.assertEquals(expected, result);
-    }
-
-    @Test
-    public void setAge() {
-        advert.setAge(1);
-        int result = advert.getAge();
-        int expected = 1;
         Assert.assertEquals(expected, result);
     }
     // </editor-fold>

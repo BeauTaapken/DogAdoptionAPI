@@ -1,7 +1,6 @@
 package beau.taapken.dogadoption.logic;
 
 import beau.taapken.dogadoption.enumerator.ResponseCode;
-import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
 import beau.taapken.dogadoption.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +18,6 @@ public class UserLogic {
     public UserLogic(UserRepository userRepository) { this.userRepository = userRepository; }
 
     public ResponseEntity addUser(User user) {
-        Response response = new Response(ResponseCode.Error, "Everything is broken here.");
         try{
             if(userRepository.existsById(user.getUUID())){
                 return new ResponseEntity<>("User already exists with given id", HttpStatus.FORBIDDEN);

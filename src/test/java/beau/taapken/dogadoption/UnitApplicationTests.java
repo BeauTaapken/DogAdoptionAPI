@@ -1,13 +1,13 @@
 package beau.taapken.dogadoption;
 
 import beau.taapken.dogadoption.enumerator.DogBreed;
-import beau.taapken.dogadoption.enumerator.ResponseCode;
 import beau.taapken.dogadoption.logic.AdvertLogic;
 import beau.taapken.dogadoption.logic.EnumLogic;
 import beau.taapken.dogadoption.logic.UserLogic;
 import beau.taapken.dogadoption.model.Advert;
-import beau.taapken.dogadoption.model.Response;
 import beau.taapken.dogadoption.model.User;
+import beau.taapken.dogadoption.projection.IGetAdvert;
+import beau.taapken.dogadoption.projection.IAdvertFeed;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,7 +106,7 @@ public class UnitApplicationTests {
         userLogic.addUser(user);
         advertLogic.addAdvert(advert);
 
-        List<Advert> result = advertLogic.getAdverts(0, 1);
+        List<IAdvertFeed> result = advertLogic.getAdvertPreviews(0, 1);
 
         int expected = 1;
 
@@ -118,7 +118,7 @@ public class UnitApplicationTests {
         userLogic.addUser(user);
         advertLogic.addAdvert(advert);
 
-        List<Advert> result = advertLogic.getAdverts(5, 1);
+        List<IAdvertFeed> result = advertLogic.getAdvertPreviews(5, 1);
 
         int expected = 0;
 
@@ -131,7 +131,7 @@ public class UnitApplicationTests {
         advertLogic.addAdvert(advert);
 
         //Need to get just added advert, id set in original advert is overwritten with random UUID
-        List<Advert> advert = advertLogic.getAdverts(0, 1);
+        List<IAdvertFeed> advert = advertLogic.getAdvertPreviews(0, 1);
 
         ResponseEntity result = advertLogic.deleteAdvert(advert.get(0).getAdvertId());
 
@@ -157,20 +157,23 @@ public class UnitApplicationTests {
         userLogic.addUser(user);
         advertLogic.addAdvert(advert);
 
-        List<Advert> oldAdverts = advertLogic.getAdverts(0, 1);
+        //Need to get just added advert, id set in original advert is overwritten with random UUID
+        List<IAdvertFeed> adverts = advertLogic.getAdvertPreviews(0, 1);
 
-        Advert ad = advert;
-        ad.setAdvertId(oldAdverts.get(0).getAdvertId());
+        String advertId = adverts.get(0).getAdvertId();
+
+        Advert ad = advertLogic.getAdvert(advertId);
+
         ad.setDescription("new description");
 
         advertLogic.updateAdvert(ad);
 
-        List<Advert> adverts = advertLogic.getAdverts(0, 1);
+        IGetAdvert advert = advertLogic.getAdvert(advertId);
 
         String expected = "new description";
 
         //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
-        Assert.assertEquals(expected, adverts.get(0).getDescription());
+        Assert.assertEquals(expected, advert.getDescription());
     }
 
     @Test
@@ -179,16 +182,17 @@ public class UnitApplicationTests {
         advertLogic.addAdvert(advert);
 
         Advert ad = advert;
-        ad.setDescription("new description");
 
         advertLogic.updateAdvert(ad);
 
-        List<Advert> adverts = advertLogic.getAdverts(0, 1);
+        IGetAdvert advert = advertLogic.getAdvert("0");
 
-        String expected = "description";
+        String expected = null;
+
+        System.out.println(advert);
 
         //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
-        Assert.assertEquals(expected, adverts.get(0).getDescription());
+        Assert.assertEquals(expected, advert);
     }
     // </editor-fold>
 

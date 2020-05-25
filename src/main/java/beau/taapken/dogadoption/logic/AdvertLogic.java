@@ -1,6 +1,7 @@
 package beau.taapken.dogadoption.logic;
 
 import beau.taapken.dogadoption.model.Advert;
+import beau.taapken.dogadoption.projection.IAdvertFeed;
 import beau.taapken.dogadoption.repository.AdvertRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,14 @@ public class AdvertLogic {
         }
     }
 
-    public List<Advert> getAdverts(int page, int size){
+    public Advert getAdvert(String advertId){
+        return advertRepository.findByAdvertId(advertId);
+    }
+
+    public List<IAdvertFeed> getAdvertPreviews(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return advertRepository.findAllByOrderByDateTimeDesc(pageable);
     }
-
 
     public ResponseEntity updateAdvert(Advert advert){
         try{
