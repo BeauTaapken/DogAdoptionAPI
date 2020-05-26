@@ -2,6 +2,7 @@ package beau.taapken.dogadoption.logic;
 
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.projection.IAdvertFeed;
+import beau.taapken.dogadoption.projection.IGetAdvert;
 import beau.taapken.dogadoption.repository.AdvertRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AdvertLogic {
         }
     }
 
-    public Advert getAdvert(String advertId){
+    public IGetAdvert getAdvert(String advertId){
         return advertRepository.findByAdvertId(advertId);
     }
 

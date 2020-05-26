@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Advert implements IGetAdvert, IAdvertFeed {
+public class Advert {
     @Id
     @JsonProperty("advertId")
     @GeneratedValue(generator = "system-uuid")

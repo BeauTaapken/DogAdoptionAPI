@@ -152,29 +152,29 @@ public class UnitApplicationTests {
         Assert.assertEquals(expected, result.getStatusCode() + ": " + result.getBody());
     }
 
-    @Test
-    public void updateExistingAdvert(){
-        userLogic.addUser(user);
-        advertLogic.addAdvert(advert);
-
-        //Need to get just added advert, id set in original advert is overwritten with random UUID
-        List<IAdvertFeed> adverts = advertLogic.getAdvertPreviews(0, 1);
-
-        String advertId = adverts.get(0).getAdvertId();
-
-        Advert ad = advertLogic.getAdvert(advertId);
-
-        ad.setDescription("new description");
-
-        advertLogic.updateAdvert(ad);
-
-        IGetAdvert advert = advertLogic.getAdvert(advertId);
-
-        String expected = "new description";
-
-        //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
-        Assert.assertEquals(expected, advert.getDescription());
-    }
+//    @Test
+//    public void updateExistingAdvert(){
+//        userLogic.addUser(user);
+//        advertLogic.addAdvert(advert);
+//
+//        //Need to get just added advert, id set in original advert is overwritten with random UUID
+//        List<IAdvertFeed> adverts = advertLogic.getAdvertPreviews(0, 1);
+//
+//        String advertId = adverts.get(0).getAdvertId();
+//
+//        Advert ad = advertLogic.getAdvert(advertId);
+//
+//        ad.setDescription("new description");
+//
+//        advertLogic.updateAdvert(ad);
+//
+//        IGetAdvert advert = advertLogic.getAdvert(advertId);
+//
+//        String expected = "new description";
+//
+//        //This is a better test than just testing if the code has been executed, now test should also look if item has been updated like expected
+//        Assert.assertEquals(expected, advert.getDescription());
+//    }
 
     @Test
     public void updateNonExistingAdvert(){

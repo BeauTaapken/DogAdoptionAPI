@@ -3,6 +3,7 @@ package beau.taapken.dogadoption.repository;
 import beau.taapken.dogadoption.enumerator.DogBreed;
 import beau.taapken.dogadoption.model.Advert;
 import beau.taapken.dogadoption.projection.IAdvertFeed;
+import beau.taapken.dogadoption.projection.IGetAdvert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,5 @@ public interface AdvertRepository extends JpaRepository<Advert, String> {
 
     List<IAdvertFeed> findAllByOrderByDateTimeDesc(Pageable pageable);
 
-    Advert findByAdvertId(String advertId);
+    IGetAdvert findByAdvertId(String advertId);
 }
