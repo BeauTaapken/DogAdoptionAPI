@@ -8,7 +8,7 @@
         <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>Beau.Taapken</groupId>
+    <groupId>some</groupId>
     <artifactId>dogadoption</artifactId>
     <version>1.0</version>
     <name>dogadoption</name>
